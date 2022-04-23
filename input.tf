@@ -29,11 +29,6 @@ variable "lb_sku_name" {
   default     = "Standard"
 }
 
-variable "lb_ip_configuration_name" {
-  description = "The name of the frontend IP Configuration name"
-  type        = string
-}
-
 variable "lb_bpool_name" {
   description = "The name for the backend pool for the Load Balancer"
   type        = string
