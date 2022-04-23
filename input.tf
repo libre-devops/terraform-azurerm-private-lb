@@ -39,26 +39,6 @@ variable "lb_bpool_name" {
   type        = string
 }
 
-variable "enable_outbound_rule" {
-  description = "Whether an outbound rule should be made"
-  type        = bool
-}
-
-variable "outbound_rule_name" {
-  description = "The name of the outbound rule"
-  type        = string
-}
-
-variable "outbound_protocol" {
-  type        = string
-  description = "The protocol for the outbound rule"
-}
-
-variable "allocated_outbound_ports" {
-  description = "The number of ports allocated for the outbound rule"
-  type        = number
-}
-
 variable "tags" {
   type        = map(string)
   description = "A map of the tags to use on the resources that are deployed with this module."

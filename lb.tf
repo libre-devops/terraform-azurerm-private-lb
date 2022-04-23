@@ -24,18 +24,3 @@ resource "azurerm_lb_backend_address_pool" "private_lb_bpool" {
   loadbalancer_id = azurerm_lb.priv_lb.id
   name            = var.lb_bpool_name
 }
-
-resource "azurerm_lb_outbound_rule" "outbound_rule" {
-  count = var.enable_outbound_rule ? 1 : 0
-
-  name = var.outbound_rule_name
-
-  backend_address_pool_id  = azurerm_lb_backend_address_pool.private_lb_bpool.id
-  loadbalancer_id          = azurerm_lb.priv_lb.id
-  protocol                 = title(var.outbound_protocol)
-  allocated_outbound_ports = var.allocated_outbound_ports
-
-  frontend_ip_configuration {
-    name = var.lb_ip_configuration_name
-  }
-}

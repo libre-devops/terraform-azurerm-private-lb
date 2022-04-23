@@ -23,23 +23,3 @@ output "bpool_name" {
   value       = azurerm_lb_backend_address_pool.private_lb_bpool.id
   description = "The name of the backend pool"
 }
-
-output "outbound_rule_id" {
-  value       = azurerm_lb_outbound_rule.outbound_rule.*.id
-  description = "The id of the outbound rule if created"
-}
-
-output "outbound_rule_name" {
-  value       = azurerm_lb_outbound_rule.outbound_rule.*.name
-  description = "The name of the outbound rule if created"
-}
-
-output "outbound_rule_protocol" {
-  value       = azurerm_lb_outbound_rule.outbound_rule.*.protocol
-  description = "The protocl of the outbound rule if created"
-}
-
-output "outbound_allocated_outbound_ports" {
-  value       = azurerm_lb_outbound_rule.outbound_rule.*.allocated_outbound_ports
-  description = "The allocated ports of the outbound rule if created"
-}
