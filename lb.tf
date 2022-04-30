@@ -5,7 +5,7 @@ resource "azurerm_lb" "priv_lb" {
 
   sku = var.lb_sku_name
 
-   dynamic "frontend_ip_configuration" {
+  dynamic "frontend_ip_configuration" {
     for_each = var.lb_frontend_ip_configurations
     content {
       name = frontend_ip_configuration.key
