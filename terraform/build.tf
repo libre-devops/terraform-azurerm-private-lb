@@ -21,15 +21,15 @@ module "network" {
   address_space   = ["10.0.0.0/16"]
   subnet_prefixes = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   subnet_names    = ["sn1-${module.network.vnet_name}", "sn2-${module.network.vnet_name}", "sn3-${module.network.vnet_name}"] //sn1-vnet-ldo-euw-dev-01
-
   subnet_service_endpoints = {
-    subnet2 = ["Microsoft.Storage", "Microsoft.Sql"], // Adds extra subnet endpoints
-    subnet3 = ["Microsoft.AzureActiveDirectory"]
+    "sn1-${module.network.vnet_name}" = ["Microsoft.Storage"] // Adds extra subnet endpoints to sn1-vnet-ldo-euw-dev-01
+    "sn2-${module.network.vnet_name}" = ["Microsoft.Storage", "Microsoft.Sql"], // Adds extra subnet endpoints to sn2-vnet-ldo-euw-dev-01
+    "sn3-${module.network.vnet_name}" = ["Microsoft.AzureActiveDirectory"] // Adds extra subnet endpoints to sn3-vnet-ldo-euw-dev-01
   }
 }
 
 module "private_lb" {
-  source = "github.com/libre-devops/terraform-azurerm-private-lb"
+  source = "registry.terraform.io/libre-devops/private-lb/azurerm"
 
   rg_name  = module.rg.rg_name
   location = module.rg.rg_location
@@ -43,5 +43,5 @@ module "private_lb" {
   }
 
   lb_name                  = "lbi-${var.short}-${var.loc}-${terraform.workspace}-01" // lbi-ldo-euw-dev-01
-  lb_bpool_name            = "bpool-${module.public_lb.lb_name}"
+  lb_bpool_name            = "bpool-${module.private_lb.lb_name}"
 }
