@@ -194,3 +194,28 @@ run "rejects_tunnel_interfaces_on_standard" {
 
   expect_failures = [var.lbs]
 }
+
+# Validation: the vnet property goes on the pool or the addresses, never both.
+run "rejects_vnet_on_pool_and_address" {
+  command = plan
+
+  variables {
+    lbs = {
+      "lbi-ldo-uks-tst-01" = {
+        frontend_ip_configurations = {
+          "internal" = { subnet_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-ldo-uks-tst-01/providers/Microsoft.Network/virtualNetworks/vnet-ldo-uks-tst-01/subnets/snet-app-vnet-ldo-uks-tst-01" }
+        }
+        backend_pools = {
+          "nva" = {
+            virtual_network_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-ldo-uks-tst-01/providers/Microsoft.Network/virtualNetworks/vnet-ldo-uks-tst-01"
+            addresses = {
+              "a" = { virtual_network_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-ldo-uks-tst-01/providers/Microsoft.Network/virtualNetworks/vnet-ldo-uks-tst-01", ip_address = "10.0.2.20" }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  expect_failures = [var.lbs]
+}

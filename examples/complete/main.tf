@@ -74,8 +74,9 @@ module "private_lb" {
 
       backend_pools = {
         "app" = {}
+        # IP-based pool: Azure wants the vnet on the pool or on each address, never both, so the
+        # addresses carry it here.
         "nva" = {
-          virtual_network_id = module.network.vnet_id
           addresses = {
             "nva-a" = { virtual_network_id = module.network.vnet_id, ip_address = "10.0.2.20" }
             "nva-b" = { virtual_network_id = module.network.vnet_id, ip_address = "10.0.2.21" }

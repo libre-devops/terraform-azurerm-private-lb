@@ -159,6 +159,16 @@ variable "lbs" {
   validation {
     condition = alltrue(flatten([
       for lb in values(var.lbs) : [
+        for p in values(lb.backend_pools) :
+        p.virtual_network_id == null ? true : alltrue([for a in values(p.addresses) : a.virtual_network_id == null])
+      ]
+    ]))
+    error_message = "Azure rejects a virtual network on both the pool and its addresses (IpBasedLbShouldHaveVnetPropertyEitherOnPoolOrBackendAddressLevel): set virtual_network_id on the pool or on each address, never both."
+  }
+
+  validation {
+    condition = alltrue(flatten([
+      for lb in values(var.lbs) : [
         for pr in values(lb.probes) : contains(["Tcp", "Http", "Https"], pr.protocol)
       ]
     ]))
