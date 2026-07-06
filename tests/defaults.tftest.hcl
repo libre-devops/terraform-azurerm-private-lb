@@ -24,7 +24,7 @@ variables {
         }
       }
       nat_rules = {
-        "ssh" = { frontend_port = 2222, backend_port = 22 }
+        "rule-ssh" = { frontend_port = 2222, backend_port = 22 }
       }
     }
   }

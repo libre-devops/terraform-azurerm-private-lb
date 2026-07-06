@@ -117,12 +117,12 @@ module "private_lb" {
       }
 
       nat_rules = {
-        "ssh-admin" = {
+        "rule-ssh-admin" = {
           frontend_ip_configuration_name = "app"
           frontend_port                  = 2222
           backend_port                   = 22
         }
-        "ssh-fleet" = {
+        "rule-ssh-fleet" = {
           frontend_ip_configuration_name = "app"
           frontend_port_start            = 50000
           frontend_port_end              = 50019
